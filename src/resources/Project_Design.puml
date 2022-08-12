@@ -1,0 +1,252 @@
+@startuml
+'describing the program
+
+title [The Program]
+package com.amazon.ata {
+    package activity {
+        class PrepareShipmentActivity {
+            - ShipmentService shipmentService
+            + PrepareShipmentActivity()
+            + PrepareShipmentActivity(ShipmentService shipmentService)
+            + handleRequest(PrepareShipmentRequest request, Context context) : String
+        }
+
+        class PrepareShipmentRequest {
+            - String asin
+            - String description
+            - BigDecimal length
+            - BigDecimal width
+            - BigDecimal height
+            - String fcCode
+            + PrepareShipmentRequest()
+            + PrepareShipmentRequest(String asin, String description, BigDecimal length,
+                                     BigDecimal width, BigDecimal height, String fcCode)
+            + PrepareShipmentRequest(Builder builder)
+            + getAsin() : String
+            + setAsin(String asin) : void
+            + getDescription() : String
+            + setDescription(String description) : void
+            + getLength() : BigDecimal
+            + setLength(BigDecimal length) : void
+            + getWidth() : BigDecimal
+            + setWidth(BigDecimal width) : void
+            + getHeight() : BigDecimal
+            + SetHeight(BigDecimal height) : void
+            + getFcCode() : String
+            + setFcCode(String fcCode) : void
+            + equals(Object o) : boolean
+            + hashCode() : int
+            + toString() : String
+            + {static} builder() : Builder
+            + {Static final class} Builder
+                - String asin
+                - String description
+                - BigDecimal length
+                - BigDecimal width
+                - BigDecimal height
+                - String fcCode
+                - Builder()
+                + withItemAsin(String asinToUse) : Builder
+                + withItemDescription(String description) : Builder
+                + withItemLength(String lengthToUse) : Builder
+                + withItemWidth(String widthToUse) : Builder
+                + widthItemHeight(String heightToUse) : Builder
+                + withFcCode(String fcCode) : Builder
+                + build() : PrepareShipmentRequest
+            }
+        }
+
+        class PrepareShipmentResponse {
+            - Item item
+            - Packaging packaging
+            - FulfilmentCenter fulfilmentCenter
+            + PrepareShipmentResponse(Item item, Packaging packaging, FulfilmentCenter fulfillmentCenter)
+            + getItem() : Item
+            + setItem(Item item) : void
+            + getPackaging() : Packaging
+            + setPackaging(Packaging packaging) : void
+            + getFulfillmentCenter() : FulfilmentCenter
+            + setFulfillmentCenter(FulfilmentCenter fulfilmentCenter) : void
+            + equals(Object o) : boolean
+            + hashCode() : int
+            + toString() : String
+        }
+    }
+
+    package cost {
+        interface CostStrategy {
+            getCost(ShipmentOption shipmentOption) : ShipmentCost
+        }
+
+        class MonetaryCostStrategy {
+            - {Static final} BigDecimal LABOR_COST
+            - {final} Map<Material, BigDecimal> materialCostPerGram
+            + MonetaryCostStrategy()
+            + getCost(ShipmentOption shipmentOption) : ShipmentCost
+        }
+    }
+
+    package dao {
+        class PackagingDAO {
+            - List<FcPackagingOption> fcPackagingOptions
+            + PackagingDAO(PackagingDatastore datastore)
+            + findShipmentOptions(Item item, FulfilmentCenter fulfillmentCenter) : List<ShipmentOption>
+        }
+    }
+
+    package datastore {
+        class PackagingDatastore {
+            - {final} List<FcPackagingOption> fcPackagingOptions
+            - createFcPackagingOption(String fcCode, Material material, String length, String width,
+                                      String height) : FcPackagingOption
+            + getFcPackagingOptions() : List<FcPackagingOption>
+        }
+    }
+
+    package exceptions {
+        class NoPackagingFitsItemException extends Exception {
+            - {Static final} long serialVersionUID
+            + NoPackagingFitsItemException()
+            + NoPackagingFitsItemException(String message)
+            + NoPackagingFitsItemException(Throwable cause)
+            + NoPackagingFitsItemException(String message, Throwable cause)
+        }
+
+        class UnknownFulfilmentCenterException {
+            - {Static final} long serialVersionUID
+            + UnknownFulfilmentCenterException()
+            + UnknownFulfilmentCenterException(String message)
+            + UnknownFulfilmentCenterException(Throwable cause)
+            + UnknownFulfilmentCenterException(String message, Throwable cause)
+        }
+    }
+
+    package service {
+        class ShipmentService {
+            - PackagingDAO packagingDAO
+            - CostStrategy costStrategy
+            + ShipmentService(PackagingDAO packagingDAO, CostStrategy costStrategy)
+            + findShipmentOption({final} Item item, {final} FulfilmentCenter fulfillmentCenter) : ShipmentOption
+            - getLowestCostShipmentOption(List<ShipmentOption> results) : ShipmentOption
+            - applyCostStrategy(List<ShipmentOption> results) : List<ShipmentOption> results
+        }
+    }
+
+    package types {
+        class FcPackagingOption {
+            - FulfilmentCenter fulfillmentCenter
+            - Packaging packaging
+            + FcPackagingOption(FulfilmentCenter fulfillmentCenter, Packaging packaging)
+            + getFulfillmentCenter() : FulfilmentCenter
+            + getPackaging() : Packaging
+            + equals(Object o) : boolean
+            + hashCode(0 : int
+        }
+
+        class FulfilmentCenter {
+            - String fcCode
+            + FulfilmentCenter(String fcCode)
+            + equals(Object o) : boolean
+            + hashCode() : int
+        }
+
+        class item {
+            - String asin
+            - String description
+            - BigDecimal length
+            - BigDecimal width
+            - BigDecimal height
+            - Item(Builder builder)
+            - toString() : String
+            + {static} Builder builder()
+            + getAsin() : String
+            + getDescription() : String
+            + getLength() : BigDecimal
+            + getWidth() : BigDecimal
+            + getHeight() : BigDecimal
+            + {static final class} Builder
+                - String asin
+                - String description
+                - BigDecimal length
+                - BigDecimal width
+                - BigDecimal height
+                - Builder()
+                + withAsin(String asinToUse) : Builder
+                + withDescription(String Description) : Builder
+                + withLength(BigDecimal length) : Builder
+                + withWidth(BigDecimal width) : Builder
+                + withHeight(BigDecimal height) : Builder
+                + Build() : Item
+        }
+
+        enum Material {
+            CORRUGATE
+            / LAMINATED_PLASTIC
+        }
+
+        class Packaging {
+            + Packaging()
+            + getMaterial() : Material
+            + getLength() : BigDecimal
+            + getWidth() : BigDecimal
+            + getHeight() : BigDecimal
+            + canFitItem(Item item) : boolean
+            + getMass() : BigDecimal
+            + equals(Object o) : boolean
+            + hashCode() : int
+        }
+
+        class ShipmentCost {
+            - ShipmentOption shipmentOption
+            - BigDecimal cost
+            + ShipmentCost(ShipmentOption shipmentOption, BigDecimal cost)
+            + getShipmentOption() : ShipmentOption
+            + getCost() : BigDecimal
+            + equals(Object o) : boolean
+            + hashCode() : int
+            + compareTo() : int
+        }
+
+        class ShipmentOption {
+            - Item item
+            - Packaging packaging
+            - FulfilmentCenter fulfillmentCenter
+            - ShipmentOption(Builder builder)
+            + {static} builder() : Builder
+            + getItem() : Item
+            + getPackaging : Packaging
+            + getFulfillmentCenter : FulfilmentCenter
+            + equals(Object o) : boolean
+            + hashCode : int
+            + {Static class} Builder
+                - Item item
+                + withItem(Item itemToUse) : Builder
+                + withPackaging(Packaging packagingToUse) : Builder
+                + withFulfillmentCenter(FulfilmentCenter fulfillmentCenterToUse) : Builder
+                + build() : ShipmentOption
+        }
+    }
+
+    class App {
+        - App()
+        - {Static} getPackagingDatastore() : PackagingDatastore
+        - {Static} getPackagingDao() : PackagingDAO
+        - getCostStrategy() : CostStrategy
+        + {Static} getShipmentService() : ShipmentService
+    }
+
+    class Box {
+        - BigDecimal length
+        - BigDecimal width
+        - BigDecimal height
+    }
+
+    class PolyBag {
+        - BigDecimal volume
+    }
+
+    Box --|> Packaging
+    PolyBag --|> Packaging
+    Packaging *-- Material
+@enduml
+
