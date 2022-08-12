@@ -11,12 +11,21 @@ public class PrepareShipmentResponse {
     private Packaging packaging;
     private FulfillmentCenter fulfillmentCenter;
 
+    /**
+     * sets all objects to the default value of null.
+     */
     public PrepareShipmentResponse() {
         this.item              = null;
         this.packaging         = null;
         this.fulfillmentCenter = null;
     }
 
+    /**
+     * Prepares a Shipment Response.
+     * @param item The type of item being used.
+     * @param packaging The type of packaging being used.
+     * @param fulfillmentCenter The type of FulfillmentCenter being used.
+     */
     public PrepareShipmentResponse(Item item, Packaging packaging, FulfillmentCenter fulfillmentCenter) {
         this.item = item;
         this.packaging = packaging;
@@ -56,8 +65,8 @@ public class PrepareShipmentResponse {
             return false;
         }
         PrepareShipmentResponse that = (PrepareShipmentResponse) o;
-        return getItem().equals(that.getItem()) && getPackaging().equals(that.getPackaging())
-                                                && getFulfillmentCenter().equals(that.getFulfillmentCenter());
+        return getItem().equals(that.getItem()) && getPackaging().equals(that.getPackaging()) &&
+                getFulfillmentCenter().equals(that.getFulfillmentCenter());
     }
 
     @Override

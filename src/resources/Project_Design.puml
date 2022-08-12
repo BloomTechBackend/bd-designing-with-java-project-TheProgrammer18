@@ -187,9 +187,6 @@ package com.amazon.ata {
         class Packaging {
             + Packaging()
             + getMaterial() : Material
-            + getLength() : BigDecimal
-            + getWidth() : BigDecimal
-            + getHeight() : BigDecimal
             + canFitItem(Item item) : boolean
             + getMass() : BigDecimal
             + equals(Object o) : boolean

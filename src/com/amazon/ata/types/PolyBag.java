@@ -1,10 +1,9 @@
 package com.amazon.ata.types;
 
-
 import java.math.BigDecimal;
 
 public class PolyBag extends Packaging {
-    private BigDecimal mass;
+    BigDecimal mass;
 
     /**
      * Instantiates a new Packaging object.
