@@ -50,23 +50,15 @@ public class ShipmentOption {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        ShipmentOption other = (ShipmentOption) o;
-        return item.equals(other.item) &&
-            packaging.equals(other.packaging) &&
-            fulfillmentCenter.equals(other.fulfillmentCenter);
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ShipmentOption that = (ShipmentOption) o;
+        return item.equals(that.item) && packaging.equals(that.packaging) && fulfillmentCenter.equals(that.fulfillmentCenter);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(item, packaging, fulfillmentCenter);
+        return Objects.hash(item , packaging , fulfillmentCenter);
     }
 
     /**

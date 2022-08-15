@@ -2,8 +2,8 @@ package com.amazon.ata.types;
 
 import java.math.BigDecimal;
 
-public class PolyBag extends Packaging {
-    BigDecimal mass;
+public class PolyBag {
+    BigDecimal mass1;
 
     /**
      * Instantiates a new Packaging object.
@@ -14,11 +14,17 @@ public class PolyBag extends Packaging {
      * @param height   - the height of the package
      */
     public PolyBag(Material material , BigDecimal length , BigDecimal width , BigDecimal height) {
-        super(material , length , width , height);
         double doubleValueOfLength = length.doubleValue();
         double doubleValueOfWidth = width.doubleValue();
         double doubleValueOfHeight = height.doubleValue();
         double volume = doubleValueOfLength * doubleValueOfWidth * doubleValueOfHeight;
-        mass = BigDecimal.valueOf(Math.ceil(Math.sqrt(volume) * 0.6));
+        mass1 = BigDecimal.valueOf(Math.ceil(Math.sqrt(volume) * 0.6));
+    }
+
+    public PolyBag() {
+    }
+
+    public BigDecimal getMassOfPolyBag() {
+        return mass1;
     }
 }

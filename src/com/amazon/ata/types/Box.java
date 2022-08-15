@@ -1,12 +1,14 @@
 package com.amazon.ata.types;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
-public class Box extends Packaging {
-    BigDecimal mass;
-    private BigDecimal endsArea;
-    private BigDecimal shortSidesArea;
-    private BigDecimal longSidesArea;
+public class Box {
+    BigDecimal length;
+    BigDecimal width;
+    BigDecimal height;
+    Material material;
+
 
     /**
      * Instantiates a new Packaging object.
@@ -17,14 +19,11 @@ public class Box extends Packaging {
      * @param height   - the height of the package
      */
     public Box(Material material , BigDecimal length , BigDecimal width , BigDecimal height) {
-        super(material , length , width , height);
-        BigDecimal two = BigDecimal.valueOf(2);
-        endsArea = length.multiply(width.multiply(two));
-        shortSidesArea = length.multiply(height.multiply(two));
-        longSidesArea = width.multiply(height.multiply(two));
-        mass = endsArea.add(shortSidesArea.add(longSidesArea));
+        this.material = material;
+        this.length = length;
+        this.width = width;
+        this.height = height;
     }
-
 
 
 }

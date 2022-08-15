@@ -10,26 +10,7 @@ import java.util.Objects;
  * Items can fit in the packaging so long as their dimensions are all smaller than
  * the packaging's dimensions.
  */
-public class Packaging {
-    /**
-     * The material this packaging is made of.
-     */
-    private Material material;
-
-    /**
-     * This packaging's length.
-     */
-    private BigDecimal length;
-
-    /**
-     * This packaging's smallest dimension.
-     */
-    private BigDecimal width;
-
-    /**
-     * This packaging's largest dimension.
-     */
-    private BigDecimal height;
+public class Packaging extends Box {
 
     /**
      * Instantiates a new Packaging object.
@@ -39,6 +20,7 @@ public class Packaging {
      * @param height - the height of the package
      */
     public Packaging(Material material, BigDecimal length, BigDecimal width, BigDecimal height) {
+        super(material, length, width, height);
         this.material = material;
         this.length = length;
         this.width = width;

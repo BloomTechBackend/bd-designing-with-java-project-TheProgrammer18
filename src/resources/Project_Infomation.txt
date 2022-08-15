@@ -1,0 +1,15 @@
+
+
+
+
+
+________________________________________________________________________________________
+Test:
+    For all MTs:
+
+    MT3 test:
+        ./gradlew -q clean :test --tests 'tct.MT3DesignIntrospectionTests'
+        ./gradlew -q clean :test --tests 'tct.MT3*'
+        ./gradlew -q clean :test --tests 'com.amazon.ata.*'
+
+

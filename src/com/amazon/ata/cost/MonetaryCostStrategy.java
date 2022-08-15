@@ -1,9 +1,6 @@
 package com.amazon.ata.cost;
 
-import com.amazon.ata.types.Material;
-import com.amazon.ata.types.Packaging;
-import com.amazon.ata.types.ShipmentCost;
-import com.amazon.ata.types.ShipmentOption;
+import com.amazon.ata.types.*;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
