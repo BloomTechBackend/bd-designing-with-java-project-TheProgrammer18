@@ -1,7 +1,6 @@
 package com.amazon.ata.types;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 /**
  * Represents a packaging option.
@@ -12,6 +11,8 @@ import java.util.Objects;
  */
 public class Packaging extends Box {
 
+    private Material material;
+
     /**
      * Instantiates a new Packaging object.
      * @param material - the Material of the package
@@ -20,7 +21,7 @@ public class Packaging extends Box {
      * @param height - the height of the package
      */
     public Packaging(Material material, BigDecimal length, BigDecimal width, BigDecimal height) {
-        super(material, length, width, height);
+        super(length, width, height);
         this.material = material;
         this.length = length;
         this.width = width;
@@ -59,29 +60,5 @@ public class Packaging extends Box {
         return endsArea.add(shortSidesArea).add(longSidesArea);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        // Can't be equal to null
-        if (o == null) {
-            return false;
-        }
 
-        // Referentially equal
-        if (this == o) {
-            return true;
-        }
-
-        // Check if it's a different type
-        if (getClass() != o.getClass()) {
-            return false;
-        }
-
-        Packaging packaging = (Packaging) o;
-        return getMaterial() == packaging.getMaterial();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getMaterial());
-    }
 }

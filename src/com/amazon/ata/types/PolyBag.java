@@ -21,9 +21,6 @@ public class PolyBag {
         mass1 = BigDecimal.valueOf(Math.ceil(Math.sqrt(volume) * 0.6));
     }
 
-    public PolyBag() {
-    }
-
     public BigDecimal getMassOfPolyBag() {
         return mass1;
     }

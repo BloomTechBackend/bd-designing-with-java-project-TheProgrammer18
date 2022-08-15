@@ -50,10 +50,15 @@ public class ShipmentOption {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ShipmentOption that = (ShipmentOption) o;
-        return item.equals(that.item) && packaging.equals(that.packaging) && fulfillmentCenter.equals(that.fulfillmentCenter);
+        return item.equals(that.item) && packaging.equals(that.packaging) &&
+                fulfillmentCenter.equals(that.fulfillmentCenter);
     }
 
     @Override
