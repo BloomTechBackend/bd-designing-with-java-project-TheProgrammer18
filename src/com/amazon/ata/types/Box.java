@@ -1,43 +1,26 @@
 package com.amazon.ata.types;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
-public class Box {
+public class Box extends Packaging {
     BigDecimal length;
     BigDecimal width;
     BigDecimal height;
+    Material material;
 
     /**
      * Instantiates a new Packaging object.
-     *
-     * @param length   - the length of the package
-     * @param width    - the width of the package
-     * @param height   - the height of the package
+     * @param material - the material of the package
+     * @param length1   - the length of the package
+     * @param width1    - the width of the package
+     * @param height1  - the height of the package
      */
-    public Box(BigDecimal length , BigDecimal width , BigDecimal height) {
-
-        this.length = length;
-        this.width = width;
-        this.height = height;
+    public Box(Material material, BigDecimal length1 , BigDecimal width1 , BigDecimal height1) {
+        super(material, length1, width1, height1);
+        this.material = material;
+        this.length1 = length1;
+        this.width1 = width1;
+        this.height1 = height1;
     }
 
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Box box = (Box) o;
-        return length.equals(box.length) && width.equals(box.width) && height.equals(box.height);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(length , width , height);
-    }
 }

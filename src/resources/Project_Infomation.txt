@@ -7,6 +7,7 @@ ________________________________________________________________________________
 Test:
     For all MTs:
     ./gradlew clean :checkstyleMain
+    ./gradlew -q clean :test --tests 'MT3*' jacocoTestCoverageVerification
     MT3 test:
         ./gradlew -q clean :test --tests 'tct.MT3DesignIntrospectionTests'
         ./gradlew -q clean :test --tests 'tct.MT3*'
