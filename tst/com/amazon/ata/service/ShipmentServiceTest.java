@@ -3,10 +3,14 @@ package com.amazon.ata.service;
 import com.amazon.ata.cost.MonetaryCostStrategy;
 import com.amazon.ata.dao.PackagingDAO;
 import com.amazon.ata.datastore.PackagingDatastore;
+import com.amazon.ata.exceptions.UnknownFulfillmentCenterException;
 import com.amazon.ata.types.FulfillmentCenter;
 import com.amazon.ata.types.Item;
+import com.amazon.ata.types.Packaging;
 import com.amazon.ata.types.ShipmentOption;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
 import java.math.BigDecimal;
 
@@ -30,12 +34,15 @@ class ShipmentServiceTest {
 
     private FulfillmentCenter existentFC = new FulfillmentCenter("ABE2");
     private FulfillmentCenter nonExistentFC = new FulfillmentCenter("NonExistentFC");
-
-    private ShipmentService shipmentService = new ShipmentService(new PackagingDAO(new PackagingDatastore()),
+    // changed the ShipmentService to accept new parameters and set it with existentFc
+    @Mock
+    private PackagingDAO packagingDAO = new PackagingDAO(new PackagingDatastore());
+    @InjectMocks
+    private ShipmentService shipmentService = new ShipmentService(packagingDAO,
             new MonetaryCostStrategy());
 
     @Test
-    void findBestShipmentOption_existentFCAndItemCanFit_returnsShipmentOption() {
+    void findBestShipmentOption_existentFCAndItemCanFit_returnsShipmentOption() throws UnknownFulfillmentCenterException {
         // GIVEN & WHEN
         ShipmentOption shipmentOption = shipmentService.findShipmentOption(smallItem, existentFC);
 
@@ -44,7 +51,7 @@ class ShipmentServiceTest {
     }
 
     @Test
-    void findBestShipmentOption_existentFCAndItemCannotFit_returnsShipmentOption() {
+    void findBestShipmentOption_existentFCAndItemCannotFit_returnsShipmentOption() throws UnknownFulfillmentCenterException {
         // GIVEN & WHEN
         ShipmentOption shipmentOption = shipmentService.findShipmentOption(largeItem, existentFC);
 
@@ -53,7 +60,7 @@ class ShipmentServiceTest {
     }
 
     @Test
-    void findBestShipmentOption_nonExistentFCAndItemCanFit_returnsShipmentOption() {
+    void findBestShipmentOption_nonExistentFCAndItemCanFit_returnsShipmentOption() throws UnknownFulfillmentCenterException {
         // GIVEN & WHEN
         ShipmentOption shipmentOption = shipmentService.findShipmentOption(smallItem, nonExistentFC);
 
@@ -62,7 +69,7 @@ class ShipmentServiceTest {
     }
 
     @Test
-    void findBestShipmentOption_nonExistentFCAndItemCannotFit_returnsShipmentOption() {
+    void findBestShipmentOption_nonExistentFCAndItemCannotFit_returnsShipmentOption() throws UnknownFulfillmentCenterException {
         // GIVEN & WHEN
         ShipmentOption shipmentOption = shipmentService.findShipmentOption(largeItem, nonExistentFC);
 

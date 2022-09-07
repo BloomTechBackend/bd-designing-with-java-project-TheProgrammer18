@@ -1,15 +1,149 @@
+Todo list:
+    1) change the test for packaging to use box
+    2) change the test for packagingDao to fit its constructor
+    3) see if what I did for MTs 3-6 were correct
+    4) work on MT5
+    5) work on MT7
 
+Todo list MT4:
+  1) update packagingDao to detect and ignore duplicate FcPackingOptions using its FC code and Packaging
+  2) create a hashmap using the FulfillmentCenter as the keys and hashSet of FcPackagingOptions as the
+  Values
+  3)
 
-
-
-
-________________________________________________________________________________________
+Todo list MT5:
+    1) think how stupid you have to be to mess up a simple formula of a * B
+    2) make WeightedCostStrategy return the weighted cost of
+    both the carbon cost and the monetary cost with 80/20 split
+________________________________________________________________________________________________________________________
 Test:
     For all MTs:
     ./gradlew clean :checkstyleMain
+    ./gradlew -q clean :test --tests 'com.amazon.ata.*'
+    ./gradlew -q clean :test --tests 'tct*'
     MT3 test:
         ./gradlew -q clean :test --tests 'tct.MT3DesignIntrospectionTests'
         ./gradlew -q clean :test --tests 'tct.MT3*'
-        ./gradlew -q clean :test --tests 'com.amazon.ata.*'
+    MT4 test:
+        ./gradlew -q clean :test --tests 'tct.MT4*'
+    MT5 test:
+        ./gradlew -q clean :test --tests 'tct.MT5*'
+    MT7 test:
+        ./gradlew -q clean :test --tests 'tct.MT7*'
 
 
+
+
+
+
+________________________________________________________________________________________________________________________
+Questions:
+
+    MT3:
+        1) packagingDatastore test not passing
+
+    MT4:
+        1) i did the hashmap but did I do it wrong
+        2)  how to pass test
+
+    MT5:
+        1) what would be the equation to do the 80/20 split
+
+________________________________________________________________________________________________________________________
+
+
+package com.amazon.ata.datastore;
+
+import com.amazon.ata.types.*;
+import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class PackagingDatastoreTest {
+
+    FulfillmentCenter ind1 = new FulfillmentCenter("IND1");
+    FulfillmentCenter abe2 = new FulfillmentCenter("ABE2");
+    FulfillmentCenter yow4 = new FulfillmentCenter("YOW4");
+    FulfillmentCenter iad2 = new FulfillmentCenter("IAD2");
+    FulfillmentCenter pdx1 = new FulfillmentCenter("PDX1");
+
+    Packaging package10Cm = new Packaging(Material.CORRUGATE);
+
+    Packaging package20Cm = new Packaging(Material.CORRUGATE);
+
+    Packaging package40Cm = new Packaging(Material.CORRUGATE);
+
+    Packaging package60Cm = new Packaging(Material.CORRUGATE);
+
+    PolyBag polyBag5000volume = new PolyBag(Material.LAMINATED_PLASTIC,BigDecimal.valueOf(5000));
+    PolyBag polyBag2000volume = new PolyBag(Material.LAMINATED_PLASTIC,BigDecimal.valueOf(5000));
+    PolyBag polyBag6000volume = new PolyBag(Material.LAMINATED_PLASTIC,BigDecimal.valueOf(5000));
+    PolyBag polyBag10000volume = new PolyBag(Material.LAMINATED_PLASTIC,BigDecimal.valueOf(5000));
+
+    FcPackagingOption ind1_10Cm = new FcPackagingOption(ind1, package10Cm);
+    FcPackagingOption abe2_20Cm = new FcPackagingOption(abe2, package20Cm);
+    FcPackagingOption abe2_40Cm = new FcPackagingOption(abe2, package40Cm);
+    FcPackagingOption yow4_10Cm = new FcPackagingOption(yow4, package10Cm);
+    FcPackagingOption yow4_20Cm = new FcPackagingOption(yow4, package20Cm);
+    FcPackagingOption yow4_60Cm = new FcPackagingOption(yow4, package60Cm);
+    FcPackagingOption iad2_20Cm = new FcPackagingOption(iad2, package20Cm);
+    FcPackagingOption pdx1_40Cm = new FcPackagingOption(pdx1, package40Cm);
+    FcPackagingOption pdx1_60Cm = new FcPackagingOption(pdx1, package60Cm);
+
+    FcPackagingOption iad2_5000 = new FcPackagingOption(iad2, polyBag5000volume);
+    FcPackagingOption yow4_2000 = new FcPackagingOption(yow4,polyBag2000volume);
+    FcPackagingOption yow4_5000 = new FcPackagingOption(yow4,polyBag5000volume);
+    FcPackagingOption yo4_10000 = new FcPackagingOption(yow4,polyBag10000volume);
+    FcPackagingOption ind1_2000 = new FcPackagingOption(ind1,polyBag2000volume);
+    FcPackagingOption ind1_5000 = new FcPackagingOption(ind1,polyBag5000volume);
+    FcPackagingOption abe2_2000 = new FcPackagingOption(abe2,polyBag2000volume);
+    FcPackagingOption abe2_6000 = new FcPackagingOption(abe2,polyBag6000volume);
+    FcPackagingOption pdx1_5000 = new FcPackagingOption(pdx1,polyBag5000volume);
+    FcPackagingOption pdx1_10000 = new FcPackagingOption(pdx1,polyBag10000volume);
+
+    @Test
+    public void getFcPackagingOptions_get_returnAllOptions() {
+        // GIVEN
+        PackagingDatastore packagingDatastore = new PackagingDatastore();
+        List<FcPackagingOption> expectedPackagingOptions = Arrays.asList(ind1_10Cm, abe2_20Cm, abe2_40Cm, yow4_10Cm,
+                yow4_20Cm, yow4_60Cm, iad2_20Cm, iad2_20Cm, pdx1_40Cm, pdx1_60Cm, pdx1_60Cm, iad2_5000,yow4_2000,
+                yow4_5000, yo4_10000, ind1_2000, ind1_5000, abe2_2000, abe2_6000, pdx1_5000, pdx1_10000, yow4_5000);
+
+        // WHEN
+        List<FcPackagingOption> fcPackagingOptions = packagingDatastore.getFcPackagingOptions();
+
+        // THEN
+        assertEquals(expectedPackagingOptions.size(), fcPackagingOptions.size(),
+                String.format("There should be %s FC/Packaging pairs.", expectedPackagingOptions.size()));
+        for (FcPackagingOption expectedPackagingOption : expectedPackagingOptions) {
+            assertTrue(fcPackagingOptions.contains(expectedPackagingOption), String.format("expected packaging " +
+                            "options from PackagingDatastore to contain %s package in fc %s",
+                    expectedPackagingOption.getPackaging(),
+                    expectedPackagingOption.getFulfillmentCenter().getFcCode()));
+        }
+        assertTrue(true, "getFcPackagingOptions contained all of the expected options.");
+    }
+}
+
+
+
+
+
+Packaging Datastore:
+
+createPolyBag("IAD2",Material.LAMINATED_PLASTIC,"5000"),
+            createPolyBag("YOW4",Material.LAMINATED_PLASTIC, "2000"),
+            createPolyBag("YOW4",Material.LAMINATED_PLASTIC, "5000"),
+            createPolyBag("YOW4",Material.LAMINATED_PLASTIC, "10000"),
+            createPolyBag("IND1",Material.LAMINATED_PLASTIC, "2000"),
+            createPolyBag("IND1",Material.LAMINATED_PLASTIC, "5000"),
+            createPolyBag("ABE2",Material.LAMINATED_PLASTIC, "2000"),
+            createPolyBag("ABE2",Material.LAMINATED_PLASTIC, "6000"),
+            createPolyBag("PDX1",Material.LAMINATED_PLASTIC, "5000"),
+            createPolyBag("PDX1",Material.LAMINATED_PLASTIC, "10000"),
+            createPolyBag("YOW4",Material.LAMINATED_PLASTIC, "5000")

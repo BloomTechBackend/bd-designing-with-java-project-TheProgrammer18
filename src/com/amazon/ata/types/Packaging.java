@@ -1,6 +1,7 @@
 package com.amazon.ata.types;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Represents a packaging option.
@@ -9,29 +10,25 @@ import java.math.BigDecimal;
  * Items can fit in the packaging so long as their dimensions are all smaller than
  * the packaging's dimensions.
  */
-public class Packaging extends Box {
+public class Packaging {
 
     private Material material;
 
     /**
      * Instantiates a new Packaging object.
      * @param material - the Material of the package
-     * @param length - the length of the package
-     * @param width - the width of the package
-     * @param height - the height of the package
      */
-    public Packaging(Material material, BigDecimal length, BigDecimal width, BigDecimal height) {
-        super(length, width, height);
+    public Packaging(Material material) {
         this.material = material;
-        this.length = length;
-        this.width = width;
-        this.height = height;
     }
 
     public Material getMaterial() {
         return material;
     }
 
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
 
     /**
      * Returns whether the given item will fit in this packaging.
@@ -40,25 +37,29 @@ public class Packaging extends Box {
      * @return whether the item will fit in this packaging
      */
     public boolean canFitItem(Item item) {
-        return this.length.compareTo(item.getLength()) > 0 &&
-                this.width.compareTo(item.getWidth()) > 0 &&
-                this.height.compareTo(item.getHeight()) > 0;
+        throw new UnsupportedOperationException();
     }
+
 
     /**
      * Returns the mass of the packaging in grams. The packaging weighs 1 gram per square centimeter.
      * @return the mass of the packaging
      */
     public BigDecimal getMass() {
-        BigDecimal two = BigDecimal.valueOf(2);
-
-        // For simplicity, we ignore overlapping flaps
-        BigDecimal endsArea = length.multiply(width).multiply(two);
-        BigDecimal shortSidesArea = length.multiply(height).multiply(two);
-        BigDecimal longSidesArea = width.multiply(height).multiply(two);
-
-        return endsArea.add(shortSidesArea).add(longSidesArea);
+        throw new UnsupportedOperationException();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Packaging packaging = (Packaging) o;
+        return material == packaging.material;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(material);
+    }
 
 }

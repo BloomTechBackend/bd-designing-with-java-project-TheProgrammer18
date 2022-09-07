@@ -120,5 +120,9 @@ public class ShipmentOption {
         public ShipmentOption build() {
             return new ShipmentOption(this);
         }
+
+        public Item getItem() {
+            return item;
+        }
     }
 }
