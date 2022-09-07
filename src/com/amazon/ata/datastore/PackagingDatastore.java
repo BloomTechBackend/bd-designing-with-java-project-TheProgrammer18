@@ -35,16 +35,20 @@ public class PackagingDatastore {
     private FcPackagingOption createFcPackagingOption(String fcCode, Material material,
                                                       String length, String width, String height) {
         FulfillmentCenter fulfillmentCenter = new FulfillmentCenter(fcCode);
+
+        if (material.equals(Material.LAMINATED_PLASTIC)) {
+            BigDecimal length1 = new BigDecimal(length);
+            BigDecimal width1 = new BigDecimal(width);
+            BigDecimal height1 = new BigDecimal(height);
+            BigDecimal volume = length1.multiply(width1).multiply(height1);
+            Packaging polyBag = new PolyBag(material, volume);
+
+            return new FcPackagingOption(fulfillmentCenter, polyBag);
+        }
         Packaging box = new Box (material, new BigDecimal(length), new BigDecimal(width),
                 new BigDecimal(height));
 
         return new FcPackagingOption(fulfillmentCenter, box);
-    }
-
-    private FcPackagingOption createPolyBag(String fcCode, Material material, String volume) {
-        FulfillmentCenter fulfillmentCenter = new FulfillmentCenter(fcCode);
-        Packaging polyBag = new PolyBag(material, new BigDecimal(volume));
-        return new FcPackagingOption(fulfillmentCenter, polyBag);
     }
 
     public List<FcPackagingOption> getFcPackagingOptions() {

@@ -21,6 +21,8 @@ class PackagingDatastoreTest {
     BigDecimal twentyCm = BigDecimal.valueOf(20);
     BigDecimal fortyCm = BigDecimal.valueOf(40);
     BigDecimal sixtyCm = BigDecimal.valueOf(60);
+    BigDecimal twoThousandCc = BigDecimal.valueOf(2000);
+    BigDecimal tenThousandCc= BigDecimal.valueOf(10000);
 
     Packaging package10Cm = new Box(Material.CORRUGATE, tenCm, tenCm, tenCm);
 
@@ -29,6 +31,8 @@ class PackagingDatastoreTest {
     Packaging package40Cm = new Box(Material.CORRUGATE, fortyCm, fortyCm, fortyCm);
 
     Packaging package60Cm = new Box(Material.CORRUGATE, sixtyCm, sixtyCm, sixtyCm);
+    Packaging packaging2000Cc = new PolyBag(Material.LAMINATED_PLASTIC, twoThousandCc);
+    Packaging packaging10000Cc = new PolyBag(Material.LAMINATED_PLASTIC, tenThousandCc);
 
 
     FcPackagingOption ind1_10Cm = new FcPackagingOption(ind1, package10Cm);
@@ -40,6 +44,8 @@ class PackagingDatastoreTest {
     FcPackagingOption iad2_20Cm = new FcPackagingOption(iad2, package20Cm);
     FcPackagingOption pdx1_40Cm = new FcPackagingOption(pdx1, package40Cm);
     FcPackagingOption pdx1_60Cm = new FcPackagingOption(pdx1, package60Cm);
+    FcPackagingOption iad2_2000Cc = new FcPackagingOption(iad2, packaging2000Cc);
+    FcPackagingOption iad2_10000Cc = new FcPackagingOption(iad2, packaging10000Cc);
 
 
     @Test

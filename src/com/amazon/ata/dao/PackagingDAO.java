@@ -99,21 +99,21 @@ public class PackagingDAO {
 
         return result;
     }
-    // added a duplicate checker method to find duplicate items using their FcCode and remove them
-//    public List<ShipmentOption> duplicateCheck(List<ShipmentOption> fcPackagingOptions) {
-//        if (fcPackagingOptions != null) {
-//            for (int i = 0; i < fcPackagingOptions.size() - 1; i++) {
-//                String fcCode1 = fcPackagingOptions.get(i).getFulfillmentCenter().getFcCode();
-//                String fcCode2 = fcPackagingOptions.get(i + 1).getFulfillmentCenter().getFcCode();
-//
-//
-//                if (fcCode1.equals(fcCode2)) {
-//                    fcPackagingOptions.remove(i);
-//                }
-//            }
-//        }
-//        return fcPackagingOptions;
-//    }
+//     added a duplicate checker method to find duplicate items using their FcCode and remove them
+    public List<ShipmentOption> duplicateCheck(List<ShipmentOption> fcPackagingOptions) {
+        if (fcPackagingOptions != null) {
+            for (int i = 0; i < fcPackagingOptions.size() - 1; i++) {
+                String fcCode1 = fcPackagingOptions.get(i).getFulfillmentCenter().getFcCode();
+                String fcCode2 = fcPackagingOptions.get(i + 1).getFulfillmentCenter().getFcCode();
+
+
+                if (fcCode1.equals(fcCode2)) {
+                    fcPackagingOptions.remove(i);
+                }
+            }
+        }
+        return fcPackagingOptions;
+    }
 
 
 
