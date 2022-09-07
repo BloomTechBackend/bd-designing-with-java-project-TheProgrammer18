@@ -68,6 +68,9 @@ public class PackagingDAO {
                             .build());
                 }
             }
+            if (result.equals(result)) {
+                result.remove(packaging);
+            }
         }
 
 //        for (FcPackagingOption fcPackagingOption : fcPackagingOptions1.get(fulfillmentCenter)) {
@@ -99,32 +102,30 @@ public class PackagingDAO {
 
         return result;
     }
-//     added a duplicate checker method to find duplicate items using their FcCode and remove them
-    public List<ShipmentOption> duplicateCheck(List<ShipmentOption> fcPackagingOptions) {
-        if (fcPackagingOptions != null) {
+
+    /*
+    public List<ShipmentOption> duplicateCheck(List<ShipmentOption> fcPackagingOptions, Map<FulfillmentCenter, Set<FcPackagingOption>> fcPackagingOption) {
+        if (fcPackagingOptions != null && fcPackagingOption != null) {
             for (int i = 0; i < fcPackagingOptions.size() - 1; i++) {
                 String fcCode1 = fcPackagingOptions.get(i).getFulfillmentCenter().getFcCode();
                 String fcCode2 = fcPackagingOptions.get(i + 1).getFulfillmentCenter().getFcCode();
 
-
-                if (fcCode1.equals(fcCode2)) {
+                if (fcPackagingOption.get(fcCode1).equals(fcPackagingOption.get(fcCode2))) {
                     fcPackagingOptions.remove(i);
                 }
             }
         }
         return fcPackagingOptions;
     }
-
-
-
-//    public PackagingDAO(PackagingDatastore datastore) {
-//        List<FcPackagingOption> fcPackagingOptionsList =  new ArrayList<>(datastore.getFcPackagingOptions());
-//        HashSet<FcPackagingOption> FcPackagingOptionsSet = new HashSet<>(fcPackagingOptionsList);
-//        for (FcPackagingOption fcPackagingOption : FcPackagingOptionsSet) {
-//            fcPackagingOptionsMap.put(fcPackagingOption.getFulfillmentCenter(), FcPackagingOptionsSet);
-//        }
-//        for (int i = 0; i < fcPackagingOptionsMap.size() + 1; i++) {
-//            fcPackagingOptionsMap.put(fcPackagingOptionsList.get(i).getFulfillmentCenter(), FcPackagingOptionsSet);
-//        }
-//    }
+    public PackagingDAO(PackagingDatastore datastore) {
+        List<FcPackagingOption> fcPackagingOptionsList =  new ArrayList<>(datastore.getFcPackagingOptions());
+        HashSet<FcPackagingOption> FcPackagingOptionsSet = new HashSet<>(fcPackagingOptionsList);
+        for (FcPackagingOption fcPackagingOption : FcPackagingOptionsSet) {
+            fcPackagingOptionsMap.put(fcPackagingOption.getFulfillmentCenter(), FcPackagingOptionsSet);
+        }
+        for (int i = 0; i < fcPackagingOptionsMap.size() + 1; i++) {
+            fcPackagingOptionsMap.put(fcPackagingOptionsList.get(i).getFulfillmentCenter(), FcPackagingOptionsSet);
+        }
+    }
+     */
 }
