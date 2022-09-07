@@ -35,16 +35,15 @@ public class PackagingDatastore {
     private FcPackagingOption createFcPackagingOption(String fcCode, Material material,
                                                       String length, String width, String height) {
         FulfillmentCenter fulfillmentCenter = new FulfillmentCenter(fcCode);
-        Packaging packaging = new Box(material, new BigDecimal(length), new BigDecimal(width),
+        Packaging box = new Box (material, new BigDecimal(length), new BigDecimal(width),
                 new BigDecimal(height));
 
-        return new FcPackagingOption(fulfillmentCenter, packaging);
+        return new FcPackagingOption(fulfillmentCenter, box);
     }
 
     private FcPackagingOption createPolyBag(String fcCode, Material material, String volume) {
-        double doubleVolume = Double.parseDouble(volume);
         FulfillmentCenter fulfillmentCenter = new FulfillmentCenter(fcCode);
-        Packaging polyBag = new PolyBag(material, BigDecimal.valueOf(doubleVolume));
+        Packaging polyBag = new PolyBag(material, new BigDecimal(volume));
         return new FcPackagingOption(fulfillmentCenter, polyBag);
     }
 
