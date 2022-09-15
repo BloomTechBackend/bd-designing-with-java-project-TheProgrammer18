@@ -3,10 +3,18 @@ package com.amazon.ata.dao;
 import com.amazon.ata.datastore.PackagingDatastore;
 import com.amazon.ata.exceptions.NoPackagingFitsItemException;
 import com.amazon.ata.exceptions.UnknownFulfillmentCenterException;
-import com.amazon.ata.types.*;
+import com.amazon.ata.types.FcPackagingOption;
+import com.amazon.ata.types.FulfillmentCenter;
+import com.amazon.ata.types.Item;
+import com.amazon.ata.types.Packaging;
+import com.amazon.ata.types.ShipmentOption;
 
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Access data for which packaging is available at which fulfillment center.
@@ -27,11 +35,6 @@ public class PackagingDAO {
         for (FcPackagingOption fcPackagingOption : datastore.getFcPackagingOptions()) {
             fcPackagingOptions1.put(fcPackagingOption.getFulfillmentCenter(), tempPackaging);
         }
-//        HashSet<FcPackagingOption> tempSet = new HashSet<>();
-//        tempSet.addAll(datastore.getFcPackagingOptions());
-//        for (int i = 0; i < datastore.getFcPackagingOptions().size(); i++) {
-//            fcPackagingOptions1.put(datastore.getFcPackagingOptions().get(i).getFulfillmentCenter(),tempSet);
-//        }
     }
 
     /**
@@ -70,22 +73,6 @@ public class PackagingDAO {
             }
         }
 
-//        for (FcPackagingOption fcPackagingOption : fcPackagingOptions1.get(fulfillmentCenter)) {
-//            Packaging packaging = fcPackagingOption.getPackaging();
-//            String fcCode = fcPackagingOption.getFulfillmentCenter().getFcCode();
-//
-//            if (fcCode.equals(fulfillmentCenter.getFcCode())) {
-//                fcFound = true;
-//                if (packaging.canFitItem(item)) {
-//                    result.add(ShipmentOption.builder()
-//                            .withItem(item)
-//                            .withPackaging(packaging)
-//                            .withFulfillmentCenter(fulfillmentCenter)
-//                            .build());
-//                }
-//            }
-//        }
-
         // Notify caller about unexpected results
         if (!fcFound) {
             throw new UnknownFulfillmentCenterException(
@@ -99,7 +86,12 @@ public class PackagingDAO {
 
         return result;
     }
-//     added a duplicate checker method to find duplicate items using their FcCode and remove them
+
+    /**
+     * duplicate checker method to find duplicate items using their FcCode and remove them.
+     * @param fcPackagingOptions a fcPackagingOptions object.
+     * @return returns a list of FcPackagingOptions.
+     */
     public List<ShipmentOption> duplicateCheck(List<ShipmentOption> fcPackagingOptions) {
         if (fcPackagingOptions != null) {
             for (int i = 0; i < fcPackagingOptions.size() - 1; i++) {
@@ -114,17 +106,4 @@ public class PackagingDAO {
         }
         return fcPackagingOptions;
     }
-
-
-
-//    public PackagingDAO(PackagingDatastore datastore) {
-//        List<FcPackagingOption> fcPackagingOptionsList =  new ArrayList<>(datastore.getFcPackagingOptions());
-//        HashSet<FcPackagingOption> FcPackagingOptionsSet = new HashSet<>(fcPackagingOptionsList);
-//        for (FcPackagingOption fcPackagingOption : FcPackagingOptionsSet) {
-//            fcPackagingOptionsMap.put(fcPackagingOption.getFulfillmentCenter(), FcPackagingOptionsSet);
-//        }
-//        for (int i = 0; i < fcPackagingOptionsMap.size() + 1; i++) {
-//            fcPackagingOptionsMap.put(fcPackagingOptionsList.get(i).getFulfillmentCenter(), FcPackagingOptionsSet);
-//        }
-//    }
 }

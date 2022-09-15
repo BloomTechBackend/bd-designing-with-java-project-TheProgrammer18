@@ -7,8 +7,6 @@ import com.amazon.ata.cost.WeightedCostStrategy;
 import com.amazon.ata.dao.PackagingDAO;
 import com.amazon.ata.datastore.PackagingDatastore;
 import com.amazon.ata.service.ShipmentService;
-import com.amazon.ata.types.FcPackagingOption;
-import com.amazon.ata.types.FulfillmentCenter;
 
 public class App {
 

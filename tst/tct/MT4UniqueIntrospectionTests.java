@@ -1,5 +1,6 @@
 package tct;
 
+import com.amazon.ata.types.ShipmentOption;
 import tct.basewrappers.BoxWrapper;
 import tct.basewrappers.FcPackagingOptionWrapper;
 import tct.basewrappers.FulfillmentCenterWrapper;

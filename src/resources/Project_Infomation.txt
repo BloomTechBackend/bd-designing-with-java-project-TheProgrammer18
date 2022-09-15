@@ -147,3 +147,55 @@ createPolyBag("IAD2",Material.LAMINATED_PLASTIC,"5000"),
             createPolyBag("PDX1",Material.LAMINATED_PLASTIC, "5000"),
             createPolyBag("PDX1",Material.LAMINATED_PLASTIC, "10000"),
             createPolyBag("YOW4",Material.LAMINATED_PLASTIC, "5000")
+
+
+
+
+
+
+//        HashSet<FcPackagingOption> tempSet = new HashSet<>();
+//        tempSet.addAll(datastore.getFcPackagingOptions());
+//        for (int i = 0; i < datastore.getFcPackagingOptions().size(); i++) {
+//            fcPackagingOptions1.put(datastore.getFcPackagingOptions().get(i).getFulfillmentCenter(),tempSet);
+//        }
+
+
+//        for (FcPackagingOption fcPackagingOption : fcPackagingOptions1.get(fulfillmentCenter)) {
+//            Packaging packaging = fcPackagingOption.getPackaging();
+//            String fcCode = fcPackagingOption.getFulfillmentCenter().getFcCode();
+//
+//            if (fcCode.equals(fulfillmentCenter.getFcCode())) {
+//                fcFound = true;
+//                if (packaging.canFitItem(item)) {
+//                    result.add(ShipmentOption.builder()
+//                            .withItem(item)
+//                            .withPackaging(packaging)
+//                            .withFulfillmentCenter(fulfillmentCenter)
+//                            .build());
+//                }
+//            }
+//
+
+
+
+//    public PackagingDAO(PackagingDatastore datastore) {
+//        List<FcPackagingOption> fcPackagingOptionsList =  new ArrayList<>(datastore.getFcPackagingOptions());
+//        HashSet<FcPackagingOption> FcPackagingOptionsSet = new HashSet<>(fcPackagingOptionsList);
+//        for (FcPackagingOption fcPackagingOption : FcPackagingOptionsSet) {
+//            fcPackagingOptionsMap.put(fcPackagingOption.getFulfillmentCenter(), FcPackagingOptionsSet);
+//        }
+//        for (int i = 0; i < fcPackagingOptionsMap.size() + 1; i++) {
+//            fcPackagingOptionsMap.put(fcPackagingOptionsList.get(i).getFulfillmentCenter(), FcPackagingOptionsSet);
+//        }
+//    }
+
+
+//        if (material.equals(Material.LAMINATED_PLASTIC)) {
+//            BigDecimal length1 = new BigDecimal(length);
+//            BigDecimal width1 = new BigDecimal(width);
+//            BigDecimal height1 = new BigDecimal(height);
+//            BigDecimal volume = length1.multiply(width1).multiply(height1);
+//            Packaging polyBag = new PolyBag(material, volume);
+//
+//            return new FcPackagingOption(fulfillmentCenter, polyBag);
+//        }
