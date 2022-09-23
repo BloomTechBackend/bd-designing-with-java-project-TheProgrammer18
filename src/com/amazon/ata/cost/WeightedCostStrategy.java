@@ -11,8 +11,8 @@ public class WeightedCostStrategy implements CostStrategy {
     private final Map<BigDecimal, CostStrategy> weightedCostPerGram;
 
     /**
-     * creates a weighted cost strategy with A 80/20 split using bot monetary
-     * cost strategy and carbon cost strategy.
+     * creates a weighted cost strategy with A 80/20 split using bot monetary cost
+     * strategy and carbon cost strategy.
      * @param monetaryCostStrategy a monetary cost strategy.
      * @param carbonCostStrategy a carbon cost strategy.
      */
