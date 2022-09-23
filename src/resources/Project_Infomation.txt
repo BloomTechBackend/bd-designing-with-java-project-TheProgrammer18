@@ -21,6 +21,8 @@ Test:
     ./gradlew clean :checkstyleMain
     ./gradlew -q clean :test --tests 'com.amazon.ata.*'
     ./gradlew -q clean :test --tests 'tct*'
+    ./gradlew build :jacocoTestCoverageVerification
+    ./gradlew clean :spotbugsMain
     MT3 test:
         ./gradlew -q clean :test --tests 'tct.MT3DesignIntrospectionTests'
         ./gradlew -q clean :test --tests 'tct.MT3*'

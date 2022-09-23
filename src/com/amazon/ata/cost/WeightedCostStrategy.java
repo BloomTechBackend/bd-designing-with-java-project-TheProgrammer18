@@ -10,8 +10,6 @@ import java.util.Map;
 public class WeightedCostStrategy implements CostStrategy {
     private final Map<BigDecimal, CostStrategy> weightedCostPerGram;
 
-    private ShipmentCost weightedCost;
-
     /**
      * creates a weighted cost strategy with A 80/20 split using bot monetary
      * cost strategy and carbon cost strategy.
